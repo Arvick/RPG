@@ -35,38 +35,49 @@ class Player:
 
 class Item:
     def __init__(self,name,message):
-        self.name=name
+        self.name=''
         self.message=''
-    
-    def __repr__(self):
-        None
 
     def use(self,target):
         return('This item cannot be used.')
 
 class Potion(Item):
-    def __init__(self,name,hp,message=None):
-        self.hp=hp
-        self.name=name
+    def __init__(self):
+        self.hp=10
+        self.name='Potion'
         self.message=f'Recovered {self.hp} HP!'
     def __repr__(self):
-        return(f'Potion. Recovers {self.hp} HP.')
+        return(self.name)
     def use(self,target):
         temp=target.hp
         temp+=self.hp
-        if temp<target.maxhp:
-            target.hp+=10
-            return(self.message)
+        if temp!=target.maxhp:
+            if temp<target.maxhp:
+                target.hp+=10
+                return(self.message)
+            elif temp>target.maxhp:
+                temp-=target.maxhp
+                target.hp+=temp
+                return(self.message)
         else:
             return(super().use(target))
 
+class SuperPotion(Potion):
+    def __init__(self):
+        self.hp=25
+        self.name='Super Potion'
+        self.message=f'Recovered {self.hp} HP!'
+    def __repr__(self):
+        return(super().__repr__())
+    
 
-Potion=Potion('Potion',10)
 
-test=Player('ww',11,12,11,11,11,11,11,11,11,*[Potion])
-print(test.inventory)
-print(Potion)
-print(test.use_item(Potion))
+
+Potion=Potion()
+SuperPotion=SuperPotion()
+test=Player('ww',11,182,11,11,11,11,11,11,11,*[SuperPotion])
+print(SuperPotion)
+print(test.use_item(SuperPotion))
 
 
 
