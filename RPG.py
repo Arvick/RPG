@@ -37,7 +37,8 @@ class Item:
     def __init__(self,name,message):
         self.name=''
         self.message=''
-
+    def __repr__(self):
+        None
     def use(self,target):
         return('This item cannot be used.')
 
@@ -53,7 +54,7 @@ class Potion(Item):
         temp+=self.hp
         if temp!=target.maxhp:
             if temp<target.maxhp:
-                target.hp+=10
+                target.hp+=self.hp
                 return(self.message)
             elif temp>target.maxhp:
                 temp-=target.maxhp
@@ -66,12 +67,9 @@ class SuperPotion(Potion):
     def __init__(self):
         self.hp=25
         self.name='Super Potion'
-        self.message=f'Recovered {self.hp} HP!'
     def __repr__(self):
         return(super().__repr__())
     
-
-
 
 Potion=Potion()
 SuperPotion=SuperPotion()
